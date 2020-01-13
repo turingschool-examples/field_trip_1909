@@ -12,3 +12,12 @@
     <% end %>
   </ul>
 </p>
+
+<p>
+  Add a Flight
+  <%= form_tag "/passengers/#{@passenger.id}/flights" do %>
+    <%= label_tag :number, 'Flight Number' %>
+    <%= text_field_tag :number %>
+    <%= submit_tag 'Add Flight' %>
+  <% end %>
+</p>
