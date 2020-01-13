@@ -24,7 +24,6 @@ RSpec.describe "As a visitor" do
       john = Passenger.create(name: "John Johnson", age: 50)
       rando = Passenger.create(name: "Rando Randerson", age: 5)
 
-
       southwest_1.passengers << [ralph, don, john, rando]
 
       visit "/flights/#{southwest_1.id}"
@@ -55,6 +54,23 @@ RSpec.describe "As a visitor" do
         expect(page).to have_content(rando.name)
         expect(page).to have_content(rando.age)
       end
+    end
+
+    it "I see the number of minors (under 18) and adults (over 18) on a flight" do
+      southwest = Airline.create(name: "Southwest")
+      southwest_1 = southwest.flights.create(number: "SW1", date: "10/10/20", time: "1300", departure_city: "Minneapolis", arrival_city: "Nashville")
+      ralph = Passenger.create(name: "Ralph Ralpherson", age: 10)
+      don = Passenger.create(name: "Don Donaldson", age: 31)
+      john = Passenger.create(name: "John Johnson", age: 50)
+      rando = Passenger.create(name: "Rando Randerson", age: 5)
+      harris = Passenger.create(name: "Harris Harrison", age:15)
+
+      southwest_1.passengers << [ralph, don, john, rando, harris]
+
+      visit "/flights/#{southwest_1.id}"
+
+      expect(page).to have_content("Minors: 3")
+      expect(page).to have_content("Adults: 2")
     end
   end
 end
