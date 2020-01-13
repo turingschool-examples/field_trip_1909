@@ -1,0 +1,23 @@
+<h1>Passenger Details</h1>
+
+<p>
+  Name: <%= @passenger.name %>
+</p>
+
+<p>
+  All Flights for This Passenger
+  <ul>
+    <% @passenger.flights.each do |flight| %>
+      <li><%= link_to flight.number, "/flights/#{flight.id}" %></li>
+    <% end %>
+  </ul>
+</p>
+
+<p>
+  Add a Flight
+  <%= form_tag "/passengers/#{@passenger.id}/flights" do %>
+    <%= label_tag :number, 'Flight Number' %>
+    <%= text_field_tag :number %>
+    <%= submit_tag 'Add Flight' %>
+  <% end %>
+</p>
