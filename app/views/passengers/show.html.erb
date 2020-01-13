@@ -14,3 +14,12 @@
     <% end %>
   </article>
 </aside>
+
+<section class="flight-booking">
+  <h2>Book a Flight</h2>
+  <%= form_tag("/passengers/#{@passenger.id}") do %>
+    <%= label_tag :flight_number %>
+    <%= text_field_tag :flight_number %>
+    <%= submit_tag "Book"%>
+  <% end %>
+</section>

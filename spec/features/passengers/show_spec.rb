@@ -16,6 +16,15 @@ RSpec.describe "passengers#show" do
       airline: @airline_1
     })
 
+    @flight_2 = Flight.create({
+      number: "123456",
+      date: '2020-01-06',
+      time: "7:25",
+      departure_city: "Dentroit",
+      arrival_city: "Denver",
+      airline: @airline_1
+    })
+
     @passenger_1 = Passenger.create({
       name: "Phillip Fry",
       age: 31
@@ -56,5 +65,21 @@ RSpec.describe "passengers#show" do
       end
     end
 
+    it "contains a form to add the current passenger to an already existing flight" do
+      within(".flight-booking") do
+        expect(page).to have_content("Book a Flight")
+        expect(page).to have_content("Flight number")
+        expect(page).to have_button("Book")
+      end
+    end
+
+    it "when user books a flight, they are added to the flight" do
+      within(".flight-booking") do
+        fill_in :flight_number, with: 123456
+        click_on "Book"
+        expect(@flight_2.passengers.count).to eq(1)
+        expect(current_path).to eq("/passengers/#{@passenger_1.id}")
+      end
+    end
   end
 end
