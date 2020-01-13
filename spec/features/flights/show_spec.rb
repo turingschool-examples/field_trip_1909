@@ -6,6 +6,7 @@ RSpec.describe 'As a visitor', type: :feature do
 
     @southwest_1 = @southwest.flights.create(number: "SW1", date: "10/10/20", time: "1300", departure_city: "Minneapolis", arrival_city: "Nashville")
     @southwest_2 = @southwest.flights.create(number: "SW2", date: "12/08/19", time: "0900", departure_city: "Baltimore", arrival_city: "Oakland")
+    @southwest_3 = @southwest.flights.create(number: "SW3", date: "12/10/19", time: "1500", departure_city: "Denver", arrival_city: "Indianapolis")
 
     @passenger_1 = Passenger.create(name: 'Daniel Frampton', age: '45')
     @passenger_2 = Passenger.create(name: 'Jamie Frampton', age: '42')
@@ -16,6 +17,7 @@ RSpec.describe 'As a visitor', type: :feature do
 
     @southwest_1.passengers << [@passenger_1, @passenger_3, @passenger_4]
     @southwest_2.passengers << [@passenger_2, @passenger_6, @passenger_5]
+    @southwest_3.passengers << [@passenger_1, @passenger_2, @passenger_3, @passenger_4, @passenger_6, @passenger_5]
   end
 
   describe "When I visit a flights show page ('/flights/:id')" do
@@ -63,6 +65,34 @@ RSpec.describe 'As a visitor', type: :feature do
       expect(page).to have_content("#{@passenger_2.name}")
       expect(page).to have_content("#{@passenger_5.name}")
       expect(page).to have_content("#{@passenger_6.name}")
+    end
+
+    it 'I see the number of minors on the flight (minors are any passengers that are under 18)' do
+      visit "/flights/#{@southwest_1.id}"
+
+      expect(page).to have_content('Minors On This Flight: 2')
+
+      visit "/flights/#{@southwest_2.id}"
+
+      expect(page).to have_content('Minors On This Flight: 2')
+
+      visit "/flights/#{@southwest_3.id}"
+
+      expect(page).to have_content('Minors On This Flight: 4')
+    end
+
+    it 'And I see the number of adults on the flight (adults are any passengers that are 18 or older)' do
+      visit "/flights/#{@southwest_1.id}"
+
+      expect(page).to have_content('Adults On This Flight: 1')
+
+      visit "/flights/#{@southwest_2.id}"
+
+      expect(page).to have_content('Adults On This Flight: 1')
+
+      visit "/flights/#{@southwest_3.id}"
+
+      expect(page).to have_content('Adults On This Flight: 2')
     end
   end
 end
