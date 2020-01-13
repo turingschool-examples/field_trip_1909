@@ -1,0 +1,10 @@
+<article class="flight-overview">
+  <h3><%= @flight.airline.name %> flight #<%= @flight.number %></h3>
+  <section class="flight-times">
+      <h4>Depature Date and Time</h4>
+      <p>Date: <%= @flight.date %></p>
+      <p>Time: <%= @flight.time %></p>
+  </section>
+  <p>Departing From: <%= @flight.departure_city %></p>
+  <p>Arriving At: <%= @flight.arrival_city %></p>
+</article>
