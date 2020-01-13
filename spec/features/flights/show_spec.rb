@@ -16,6 +16,23 @@ RSpec.describe "flights#show" do
       airline: @airline_1
     })
 
+    @passenger_1 = Passenger.create!({
+      name: "Phillip Fry",
+      age: 31
+    })
+
+    @passenger_2 = Passenger.create!({
+      name: "James McAvoy",
+      age: 47
+    })
+
+    @passenger_3 = Passenger.create!({
+      name: "Ameesh Paktra",
+      age: 36
+    })
+
+    @flight_1.passengers << [@passenger_1, @passenger_2, @passenger_3]
+
     visit "/flights/#{@flight_1.id}"
   }
 
@@ -37,7 +54,15 @@ RSpec.describe "flights#show" do
     end
 
     it "displays the names of all the passengers on the flight" do
-
+      save_and_open_page
+      within(".passenger-dossier") do
+        expect(page).to have_content(@passenger_1.name)
+        expect(page).to have_content(@passenger_1.age)
+        expect(page).to have_content(@passenger_2.name)
+        expect(page).to have_content(@passenger_2.age)
+        expect(page).to have_content(@passenger_3.name)
+        expect(page).to have_content(@passenger_3.age)
+      end
     end
   end
 end
