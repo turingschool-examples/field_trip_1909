@@ -31,7 +31,12 @@ RSpec.describe "flights#show" do
       age: 36
     })
 
-    @flight_1.passengers << [@passenger_1, @passenger_2, @passenger_3]
+    @passenger_4 = Passenger.create({
+      name: "Small Fry",
+      age: 13
+    })
+
+    @flight_1.passengers << [@passenger_1, @passenger_2, @passenger_3, @passenger_4]
 
     visit "/flights/#{@flight_1.id}"
   }
@@ -61,6 +66,13 @@ RSpec.describe "flights#show" do
         expect(page).to have_content(@passenger_2.age)
         expect(page).to have_content(@passenger_3.name)
         expect(page).to have_content(@passenger_3.age)
+      end
+    end
+
+    it "displays number of minors and non-minor passengers on the flight" do
+      within(".passenger-metrics") do
+        expect(page).to have_content("Adults: 3")
+        expect(page).to have_content("Minors: 1")
       end
     end
   end
