@@ -1,0 +1,27 @@
+<article class="flight-overview">
+  <header>
+    <h2>Flight Overview</h2>
+  </header>
+  <h3><%= @flight.airline.name %> flight #<%= @flight.number %></h3>
+  <section class="flight-times">
+      <h4>Depature Date and Time</h4>
+      <p>Date: <%= @flight.date %></p>
+      <p>Time: <%= @flight.time %></p>
+  </section>
+  <p>Departing From: <%= @flight.departure_city %></p>
+  <p>Arriving At: <%= @flight.arrival_city %></p>
+</article>
+<aside class="passenger-dossier">
+  <header>
+    <h2>Flight Dossier</h2>
+  </header>
+  <article>
+    <% @flight.passengers.each do |passenger| %>
+      <p><%= passenger.name %>, age: <%= passenger.age %></p>
+    <% end %>
+  </article>
+  <article class="passenger-metrics">
+    <h4>Passenger Metrics</h4>
+    <p>Adults: , Minors: </p>
+  </article>
+</aside>

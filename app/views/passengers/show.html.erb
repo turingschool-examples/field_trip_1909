@@ -1,0 +1,25 @@
+<article class="passenger-overview">
+  <header>
+    <h2>Passenger Overview</h2>
+  </header>
+  <p><%= @passenger.name %></p>
+</article>
+<aside class="flights-dossier">
+  <header>
+    <h2>Active Flights</h2>
+  </header>
+  <article>
+    <% @passenger.flights.each do |flight| %>
+      <%= link_to "Flight ##{flight.number}", "/flights/#{flight.id}" %>
+    <% end %>
+  </article>
+</aside>
+
+<section class="flight-booking">
+  <h2>Book a Flight</h2>
+  <%= form_tag("/passengers/#{@passenger.id}") do %>
+    <%= label_tag :flight_number %>
+    <%= text_field_tag :flight_number %>
+    <%= submit_tag "Book"%>
+  <% end %>
+</section>
