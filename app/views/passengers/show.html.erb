@@ -1,0 +1,5 @@
+<h1><%= @passager.name %></h1>
+<% @passager.flights.each do |fli| %>
+<%= link_to fli.number, "/flights/#{fli.id}" %>
+<% end %>
+<%= link_to 'Add Flight'%>
