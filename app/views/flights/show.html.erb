@@ -3,3 +3,10 @@
 <%= @flight.time %><br>
 <%= @flight.departure_city %><br>
 <%= @flight.arrival_city %><br>
+<%= @flight.airline.name %>
+<% @flight.passengers.each do |passenger| %>
+  <section id="passenger-<%= passenger.id %>">
+    <%= passenger.name %><br>
+    <%= passenger.age %>
+  </section>
+<% end %>
