@@ -5,3 +5,12 @@
     <%= link_to flight.number, "/flights/#{flight.id}" %>
   </section>
 <% end %>
+
+<section>Add Another Flight:
+  <%= form_tag "/passengers/#{@passenger.id}" do %>
+    <%= label_tag :number %>
+    <%= text_field_tag :number %>
+
+    <%= submit_tag "Submit" %>
+  <% end %>
+</section>
