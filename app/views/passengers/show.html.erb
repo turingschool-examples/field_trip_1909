@@ -1,0 +1,16 @@
+<article class="passenger-overview">
+  <header>
+    <h2>Passenger Overview</h2>
+  </header>
+  <p><%= @passenger.name %></p>
+</article>
+<aside class="flights-dossier">
+  <header>
+    <h2>Active Flights</h2>
+  </header>
+  <article>
+    <% @passenger.flights.each do |flight| %>
+      <%= link_to "Flight ##{flight.number}", "/flights/#{flight.id}" %>
+    <% end %>
+  </article>
+</aside>
