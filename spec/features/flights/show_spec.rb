@@ -3,11 +3,11 @@ require "rails_helper"
 RSpec.describe "flights#show" do
   before {
 
-    @airline_1 = Airline.create!({
+    @airline_1 = Airline.create({
       name: "Southwest Airlines"
     })
 
-    @flight_1 = Flight.create!({
+    @flight_1 = Flight.create({
       number: "511431",
       date: '2020-01-05',
       time: "12:30",
@@ -16,17 +16,17 @@ RSpec.describe "flights#show" do
       airline: @airline_1
     })
 
-    @passenger_1 = Passenger.create!({
+    @passenger_1 = Passenger.create({
       name: "Phillip Fry",
       age: 31
     })
 
-    @passenger_2 = Passenger.create!({
+    @passenger_2 = Passenger.create({
       name: "James McAvoy",
       age: 47
     })
 
-    @passenger_3 = Passenger.create!({
+    @passenger_3 = Passenger.create({
       name: "Ameesh Paktra",
       age: 36
     })
@@ -54,7 +54,6 @@ RSpec.describe "flights#show" do
     end
 
     it "displays the names of all the passengers on the flight" do
-      save_and_open_page
       within(".passenger-dossier") do
         expect(page).to have_content(@passenger_1.name)
         expect(page).to have_content(@passenger_1.age)
