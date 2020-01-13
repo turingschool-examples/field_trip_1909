@@ -4,4 +4,6 @@ Rails.application.routes.draw do
   resources :airlines, only: [:index, :show]
   resources :flights, only: [:show]
   resources :passengers, only: [:show]
+
+  post '/passengers/:id/flights', to: 'passenger_flights#create'
 end

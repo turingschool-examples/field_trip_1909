@@ -28,24 +28,54 @@ RSpec.describe 'As a visitor', type: :feature do
 
       expect(page).to have_content("Name: #{@passenger_1.name}")
     end
-    it "And I see a section of the page that displays all flight numbers of the flights for that passenger" do
+
+    it "I see a section of the page that displays all flight numbers of the flights for that passenger" do
       visit "/passengers/#{@passenger_1.id}"
 
       expect(page).to have_content("All Flights for This Passenger")
       expect(page).to have_content("#{@southwest_1.number}")
+      expect(page).not_to have_content("#{@southwest_2.number}")
       expect(page).to have_content("#{@southwest_3.number}")
+      expect(page).not_to have_content("#{@southwest_4.number}")
 
       visit "/passengers/#{@passenger_2.id}"
 
       expect(page).to have_content("All Flights for This Passenger")
       expect(page).to have_content("#{@southwest_2.number}")
+      expect(page).not_to have_content("#{@southwest_1.number}")
       expect(page).to have_content("#{@southwest_4.number}")
+      expect(page).not_to have_content("#{@southwest_3.number}")
     end
-    it "And all flight numbers listed link to that flights show page" do
+
+    it "I see all flight numbers listed link to that flights show page" do
       visit "/passengers/#{@passenger_1.id}"
 
       expect(page).to have_link("#{@southwest_1.number}", href: "/flights/#{@southwest_1.id}")
       expect(page).to have_link("#{@southwest_3.number}", href: "/flights/#{@southwest_3.id}")
+    end
+
+    it 'I see a form to add a flight' do
+      visit "/passengers/#{@passenger_1.id}"
+
+      expect(page).to have_content("Add a Flight")
+      expect(page).to have_field('Flight Number')
+      expect(page).to have_button('Add Flight')
+    end
+
+    describe 'When I fill in the form with a flight number and click submit' do
+      before(:each) do
+        visit "/passengers/#{@passenger_1.id}"
+        fill_in 'Flight Number', with: "SW2"
+        click_on 'Add Flight'
+      end
+
+      it "I'm taken back to the passengers show page" do
+        expect(current_path).to eq("/passengers/#{@passenger_1.id}")
+      end
+
+      it "And I can see the flight number of the flight I just added" do
+        expect(page).to have_link("SW2", href: "/flights/#{@southwest_2.id}")
+      end
     end
   end
 end
