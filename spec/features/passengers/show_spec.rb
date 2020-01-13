@@ -34,13 +34,17 @@ RSpec.describe 'As a visitor', type: :feature do
 
       expect(page).to have_content("All Flights for This Passenger")
       expect(page).to have_content("#{@southwest_1.number}")
+      expect(page).not_to have_content("#{@southwest_2.number}")
       expect(page).to have_content("#{@southwest_3.number}")
+      expect(page).not_to have_content("#{@southwest_4.number}")
 
       visit "/passengers/#{@passenger_2.id}"
 
       expect(page).to have_content("All Flights for This Passenger")
       expect(page).to have_content("#{@southwest_2.number}")
+      expect(page).not_to have_content("#{@southwest_1.number}")
       expect(page).to have_content("#{@southwest_4.number}")
+      expect(page).not_to have_content("#{@southwest_3.number}")
     end
 
     it "I see all flight numbers listed link to that flights show page" do
@@ -61,7 +65,7 @@ RSpec.describe 'As a visitor', type: :feature do
     describe 'When I fill in the form with a flight number and click submit' do
       before(:each) do
         visit "/passengers/#{@passenger_1.id}"
-        fill_in 'Flight Number', with: "SW5"
+        fill_in 'Flight Number', with: "SW2"
         click_on 'Add Flight'
       end
 
@@ -70,7 +74,7 @@ RSpec.describe 'As a visitor', type: :feature do
       end
 
       it "And I can see the flight number of the flight I just added" do
-        expect(page).to have_content("SW5")
+        expect(page).to have_link("SW2", href: "/flights/#{@southwest_2.id}")
       end
     end
   end
