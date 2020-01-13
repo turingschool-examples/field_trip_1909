@@ -16,4 +16,7 @@
       <li><%= passenger.name %></li>
     <% end %>
   </ul>
+
+  Minors On This Flight: <%= @flight.total_minor_passengers %><br />
+  Adults On This Flight: <%= @flight.total_adult_passengers %>
 </p>
