@@ -1,0 +1,6 @@
+<h1>All passngers</h1>
+<% @passangers.each do |pass| %>
+  <% pass.flights.each do |fligh| %>
+    <p><%= pass.name %> <%= fligh.number %></p>
+  <% end %>
+<% end %>

@@ -1,0 +1,6 @@
+<% @flights.each do |fly| %>
+  <p><%= fly.number %></p>
+  <% fly.passengers.each do |pas| %>
+    <p><%= pas.name  %></p> <%= link_to 'Remove from flight', "flights/#{fly.id}/passengers/#{pas.id}/remove", method: :delete %>
+    <% end %>
+<% end %>
