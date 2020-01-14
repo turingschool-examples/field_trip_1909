@@ -8,4 +8,6 @@ Rails.application.routes.draw do
   # get '/flights', to: 'flights#index'
   delete "flights/:flight_id/passengers/:passanger_id/remove", to: 'passengers#remove'
 
+  get '/passengers', to: 'passengers#index'
+
 end

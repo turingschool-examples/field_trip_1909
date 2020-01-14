@@ -5,4 +5,7 @@ class PassengersController < ApplicationController
     pass.passenger_flights[0].destroy
     redirect_to '/flights'
   end
+  def index
+    @passangers = Passenger.all
+  end
 end
